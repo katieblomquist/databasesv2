@@ -21,7 +21,7 @@ async function getAllBookings() {
 }
 
 async function filterBookingsStaff(staffId, status) {
-    const result = await sql`select bookings.booking_id, bookings.status, bookings.visit_date, bookings.street, bookings.city, bookings.zip, bookings.staffid, aCharacters.cName, staff.fname FROM bookings INNER JOIN aCharacters ON aCharacters.character_id = bookings.characterid INNER JOIN staff ON staff.staff_id = bookings.staffid INNER JOIN char_played ON aCharacters.character_id = char_played.characterid WHERE bookings.status = ${status} AND char_played.staffid = ${staffId};`
+    const result = await sql`select bookings.booking_id, bookings.status, bookings.visit_date, bookings.street, bookings.city, bookings.zip, bookings.staffid, aCharacters.cName, staff.fname FROM bookings INNER JOIN aCharacters ON aCharacters.character_id = bookings.characterid INNER JOIN staff ON staff.staff_id = bookings.staffid INNER JOIN char_played ON aCharacters.character_id = char_played.characterid WHERE bookings.status = ${status} AND char_played.staffid = ${staffId} AND (bookings.staffid = ${staffId} OR bookings.staffid = 0); ;`
     return result;
 }
 
