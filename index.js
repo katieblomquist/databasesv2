@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const { getAllBookings, filterBookingsStaff, filterBookingsAdmin, updateStaffId, updateStatus, getBookingId, addBooking } = require('./db');
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: true
+}));
 const port = process.env.PORT || 3000
 
 app.get('/', async(req, res) => {
