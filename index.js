@@ -10,7 +10,7 @@ app.get('/', async(req, res) => {
 })
 
 app.get('/bookings', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", 'http://127.0.0.1:5173');
+    res.header("Access-Control-Allow-Origin", '*');
     res.json(await getAllBookings());
 });
 
