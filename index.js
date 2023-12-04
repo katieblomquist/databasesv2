@@ -3,7 +3,7 @@ const cors = require('cors');
 const { getAllBookings, filterBookingsStaff, filterBookingsAdmin, updateStaffId, updateStatus, getBookingId, addBooking } = require('./db');
 const app = express();
 app.use(cors({
-    origin: true
+    origin: 'http://127.0.0.1:5173'
 }));
 const port = process.env.PORT || 3000
 
