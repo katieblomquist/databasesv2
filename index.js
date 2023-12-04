@@ -4,60 +4,60 @@ const { getAllBookings, filterBookingsStaff, filterBookingsAdmin, updateStaffId,
 const app = express();
 app.use(cors());
 const port = process.env.PORT || 3000
+try {
+    app.get('/', async (req, res) => {
+        res.send('Connected');
+    })
 
-app.get('/', async(req, res) => {
-    res.send('Connected');
-})
+    app.get('/bookings', async (req, res) => {
+        res.json(await getAllBookings());
+    });
 
-app.get('/bookings', async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://example.com");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.json(await getAllBookings());
-});
+    app.get('/staff', async (req, res) => {
+        staffId = req.query.staffId;
+        bstatus = req.query.status;
+        res.json(await filterBookingsStaff(staffId, bstatus));
+    });
 
-app.get('/staff', async (req, res) => {
-    staffId = req.query.staffId;
-    bstatus = req.query.status;
-    res.json(await filterBookingsStaff(staffId, bstatus));
-});
+    app.get('/admin', async (req, res) => {
+        bstatus = req.query.status;
+        res.json(await filterBookingsAdmin(bstatus));
+    });
 
-app.get('/admin', async (req, res) => {
-    bstatus = req.query.status;
-    res.json(await filterBookingsAdmin(bstatus));
-});
+    app.patch('/updatestatus', async (req, res) => {
+        bstatus = req.query.status;
+        bookingId = req.query.bookingId;
+        res.json(await updateStatus(bstatus, bookingId));
+    });
 
-app.patch('/updatestatus', async (req, res) => {
-    bstatus = req.query.status;
-    bookingId = req.query.bookingId;
-    res.json(await updateStatus(bstatus, bookingId));
-});
+    app.patch('/updatestaff', async (req, res) => {
+        staffId = req.query.staffId;
+        bookingId = req.query.bookingId;
+        res.json(await updateStaffId(staffId, bookingId));
+    });
 
-app.patch('/updatestaff', async (req, res) => {
-    staffId = req.query.staffId;
-    bookingId = req.query.bookingId;
-    res.json(await updateStaffId(staffId, bookingId));
-});
+    app.get('/bookingid', async (req, res) => {
+        res.json(await getBookingId());
+    })
 
-app.get('/bookingid', async (req, res) => {
-    res.json(await getBookingId());
-})
+    app.post('/newbooking', async (req, res) => {
+        bookingId = req.query.bookingId;
+        fname = req.query.fname;
+        lname = req.query.lname;
+        phone = req.query.phone;
+        child_name = req.query.child;
+        visit_date = req.query.visit_date;
+        visit_length = req.query.visit_length;
+        characterid = req.query.characterid;
+        street = req.query.street;
+        city = req.query.city;
+        zip = req.query.zip;
+        agreeTos = req.query.agreeTos
 
-app.post('/newbooking', async (req, res) => {
-    bookingId = req.query.bookingId;
-    fname = req.query.fname;
-    lname = req.query.lname;
-    phone = req.query.phone;
-    child_name = req.query.child;
-    visit_date = req.query.visit_date;
-    visit_length = req.query.visit_length;
-    characterid = req.query.characterid;
-    street = req.query.street;
-    city = req.query.city;
-    zip = req.query.zip;
-    agreeTos = req.query.agreeTos
+        res.json(await addBooking(bookingId, fname, lname, phone, child_name, visit_date, visit_length, characterid, street, city, zip, agreeTos));
+    })
 
-    res.json(await addBooking(bookingId, fname, lname, phone, child_name, visit_date, visit_length, characterid, street, city, zip, agreeTos));
-})
-
-app.listen(port);
+    app.listen(port);
+} catch (error) {
+    console.log(error);
+}

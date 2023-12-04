@@ -16,7 +16,7 @@ const sql = postgres({
 });
 
 async function getAllBookings() {
-    const result = await sql`select bookings.booking_id, bookings.status, bookings.visit_date, bookings.street, bookings.city, bookings.zip, bookings.staffid, aCharacters.cName, staff.fname FROM bookings INNER JOIN aCharacters ON aCharacters.character_id = bookings.characterid INNER JOIN staff ON staff.staff_id = bookings.staffid;`
+    const result = await sql`select bookings.booking_id, bookings.status, bookings.visit_date, bookings.street, bookings.city, bookings.zip, bookings.staffid, aCharacters.cName, staff.fname FROM bookings INNER JOIN aCharacters ON aCharacters.character_id = bookings.characterid INNER JOIN staff ON staff.staff_id = bookings.staffid WHERE bookings.status != 'reject';`
     return result;
 }
 
