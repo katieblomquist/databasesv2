@@ -4,6 +4,10 @@ const { getAllBookings, filterBookingsStaff, filterBookingsAdmin, updateStaffId,
 const app = express();
 app.use(cors());
 
+app.get('/', async(req, res) => {
+    res.send('Connected');
+})
+
 app.get('/bookings', async (req, res) => {
     res.json(await getAllBookings());
 });
