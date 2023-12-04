@@ -3,6 +3,7 @@ const cors = require('cors');
 const { getAllBookings, filterBookingsStaff, filterBookingsAdmin, updateStaffId, updateStatus, getBookingId, addBooking } = require('./db');
 const app = express();
 app.use(cors());
+const port = process.env.PORT || 3000
 
 app.get('/', async(req, res) => {
     res.send('Connected');
@@ -56,4 +57,4 @@ app.post('/newbooking', async (req, res) => {
     res.json(await addBooking(bookingId, fname, lname, phone, child_name, visit_date, visit_length, characterid, street, city, zip, agreeTos));
 })
 
-app.listen(3000);
+app.listen(port);
